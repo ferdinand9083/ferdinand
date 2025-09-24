@@ -1,3 +1,4 @@
+import platform
 import os
 from tkinter import *
 
@@ -20,6 +21,10 @@ def logcmd():
         os.chdir('..')
         text = os.getcwd()
 
+    elif text == "$home":  # шаг назад
+        text = platform.node()
+
+
     elif text == 'ls':  # выводит какие файлы в папке
         text = os.listdir()
         for i in range(len(text)):
@@ -30,7 +35,7 @@ def logcmd():
          root.destroy()
          
     else:
-        text='такой нет команды'
+        text='такой команды нет'
         
     if history == "":
         history = str(text)
