@@ -42,7 +42,7 @@ def logcmd():
         except FileNotFoundError:
             text='файл не найден'
 
-    if text=='':
+    elif text=='':
         text='\n'
          
     else:
