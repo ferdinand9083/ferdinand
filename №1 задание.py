@@ -17,11 +17,11 @@ def logcmd():
     if text == 'cd':  # Показывает путь где мы
         text = os.getcwd()
 
-    elif text == "os.chdir('..')":  # шаг назад
+    elif text == "back":  # шаг назад
         os.chdir('..')
         text = os.getcwd()
 
-    elif text == "$home":  # шаг назад
+    elif text == "$home":  # имя устройства
         text = platform.node()
 
 
@@ -31,17 +31,28 @@ def logcmd():
             text2.append(text[i] + '\n')
         text = ''.join(text2)
 
-    elif text=='exit':
+    elif text=='exit': #выход из cmd
          root.destroy()
+
+    elif 'chdir' in text: #Заходим в указанную папку
+        try:
+            x=text[6:-1]
+            os.chdir(x)
+            text = os.getcwd()
+        except FileNotFoundError:
+            text='файл не найден'
+
+    if text=='':
+        text='\n'
          
     else:
-        text='такой команды нет'
+        text='такой команды нет' #ошибка в команде
         
     if history == "":
         history = str(text)
     
     else:
-        history += "\n" + str(text)
+        history += "\n" + str(text) #Выводит текс
 
     cmd_label.config(text=history)
     canvas.update_idletasks()
@@ -51,7 +62,6 @@ def logcmd():
 # Параметры окна
 root.geometry('600x400')
 root.title('VFS')
-root.iconbitmap('gd.ico')
 root.config(bg='#808080')
 root.resizable(False, False)
 
