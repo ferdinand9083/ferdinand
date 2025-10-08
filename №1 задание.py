@@ -1,4 +1,4 @@
-import platform
+from pathlib import Path
 import os
 from tkinter import *
 
@@ -14,33 +14,22 @@ def logcmd():
     # раскрываем переменные окружения
     text = os.path.expandvars(text)
 
-    if text == 'cd':  # Показывает путь где мы
-        text = os.getcwd()
-
-    elif text == "back":  # шаг назад
-        os.chdir('..')
-        text = os.getcwd()
+    if 'cd' in text:  # Показывает путь где мы
+        t=text+' '
+        t=t[3:-1]
+        text=f"команда 'cd' аргумент '{t}'"
 
     elif text == "$home":  # имя устройства
-        text = platform.node()
+        text = Path.home()
 
 
-    elif text == 'ls':  # выводит какие файлы в папке
-        text = os.listdir()
-        for i in range(len(text)):
-            text2.append(text[i] + '\n')
-        text = ''.join(text2)
+    elif 'ls' in text:# выводит какие файлы в папке
+        t=text+' '
+        t=t[3:-1]
+        text=f"команда 'ls' аргумент '{t}'"
 
     elif text=='exit': #выход из cmd
          root.destroy()
-
-    elif 'chdir' in text: #Заходим в указанную папку
-        try:
-            x=text[6:-1]
-            os.chdir(x)
-            text = os.getcwd()
-        except FileNotFoundError:
-            text='файл не найден'
 
     elif text=='':
         text='\n'
